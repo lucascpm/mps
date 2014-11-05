@@ -21,6 +21,7 @@ public class TelaPrincipal {
     public static void main(String args[]) throws SQLException { 
         TelaPrincipal telaPrincipal = new TelaPrincipal();
         telaPrincipal.menuInicial(); 
+        System.out.println("");
     } 
     
     public void menuInicial() throws SQLException { 

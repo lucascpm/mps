@@ -22,8 +22,7 @@ public class AlunoController {
             System.out.println("1-Listar");
             System.out.println("2-Inserir");
             System.out.println("3-Remover");
-            System.out.println("4-Pesquisar");
-            System.out.println(":");
+            System.out.println("4-Pesquisar:");
             resposta = in.next();
             
             if (resposta.trim().equals("1")) 
