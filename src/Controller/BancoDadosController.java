@@ -4,8 +4,10 @@ package Controller;
  *
  * @author Lucas
  */
-import Model.Aluno; 
-import Model.Disciplina; 
+import Model.Aluno;
+import Model.Disciplina;
+import Model.Professor;
+import Model.Curso;
 import com.oracle.jrockit.jfr.ContentType;
 import java.sql.Connection; 
 import java.sql.DriverManager; 
@@ -19,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Calendar; 
 import java.util.Date; 
 import java.util.List;
-import Model.Professor;
 
 public class BancoDadosController { 
 
@@ -40,6 +41,12 @@ public class BancoDadosController {
     private final String INSERT_PROFESSOR = "INSERT INTO professores (codigo,data_admissao,nome,endereco,telefone,sexo,email,senha,login) VALUES (?,?,?,?,?,?,?,?,?)";
     private final String SELECT_ALL_PROFESSOR = "SELECT * FROM professores";
     private final String SELECT_ONE_PROFESSOR = "SELECT * FROM professores WHERE codigo = ?"; 
+ 
+    //-----------CURSOS-SQL-------------------------------------------------------------------------------------
+    private final String DELETE_CURSO = "DELETE FROM cursos WHERE matricula = ?";
+    private final String INSERT_CURSO = "INSERT INTO cursos (codigo,nome) VALUES (?,?)";
+    private final String SELECT_ALL_CURSO = "SELECT * FROM cursos";
+    private final String SELECT_ONE_CURSO = "SELECT * FROM cursos WHERE codigo = ?"; 
     
     
     private final String SELECT_NEXT_SEQUENCE = "SELECT NEXTVAL('SEQUENCE_ID')";
@@ -360,6 +367,90 @@ public class BancoDadosController {
         try {
             con = getConnection();
             PreparedStatement prepared = con.prepareStatement(DELETE_PROFESSOR);
+            prepared.setLong(1, codigo);
+            retorno = prepared.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnnection(con);
+        }
+        return retorno; 
+    }  
+      //-----------------------------------------------------------
+    
+    
+    //------------- CURSOS -----------------------------------
+    //Retorna uma List com os elementos (objetos Curso) encontrados na pesquisa
+    public List<Curso> selectCurso(Curso curso) throws SQLException { 
+        Connection con = null; 
+        List<Curso> listCurso = new ArrayList<Curso>();
+        try { 
+            con = getConnection(); 
+            PreparedStatement prepared = con.prepareStatement(SELECT_ALL_CURSO); 
+            ResultSet resultSet = prepared.executeQuery(); 
+            
+            while (resultSet.next()) {
+                Curso cursoTmp = new Curso(resultSet.getString("nome"), resultSet.getInt("codigo"));
+
+                listCurso.add(cursoTmp); 
+            } 
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        } finally { 
+            closeConnnection(con);
+        }
+        
+        return listCurso; 
+    }
+    
+    //Retorna um objeto Curso encontrados na pesquisa
+    public Curso pesquisaCurso(int codigo) throws SQLException {
+        Curso cursoTmp = null;
+        Connection con = null;
+        try {
+            con = getConnection();
+            PreparedStatement prepared = con.prepareStatement(SELECT_ONE_CURSO);
+            prepared.setLong(1, codigo);
+            
+            ResultSet resultSet = prepared.executeQuery();
+            resultSet.next();
+            
+            cursoTmp = new Curso(resultSet.getString("nome"), resultSet.getInt("codigo"));
+                
+        } catch (SQLException e){
+            e.printStackTrace();
+        } finally {
+            closeConnnection(con);
+        }
+        
+        return cursoTmp;
+    }
+    
+    public boolean insertCurso(Curso curso) {
+        Connection con = null; 
+        try { 
+            con = getConnection();
+            PreparedStatement prepared = con.prepareStatement(INSERT_CURSO); //Query
+
+
+            prepared.setInt   (1, curso.getCodigo());
+            prepared.setString(2, curso.getNome());
+            
+            retorno = prepared.execute(); 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally { 
+            closeConnnection(con); 
+        }
+        return retorno;
+    }
+    
+    public boolean removeCurso(int codigo) throws SQLException { 
+        Connection con = null;
+        try {
+            con = getConnection();
+            PreparedStatement prepared = con.prepareStatement(DELETE_CURSO);
             prepared.setLong(1, codigo);
             retorno = prepared.execute();
         } catch (SQLException e) {

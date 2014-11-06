@@ -13,6 +13,7 @@ package View;
 import Controller.AlunoController; 
 import Controller.DisciplinaController;
 import Controller.ProfessorController; 
+import Controller.CursoController;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -31,6 +32,7 @@ public class TelaPrincipal {
             System.out.println("1-Disciplinas"); 
             System.out.println("2-Alunos"); 
             System.out.println("3-Professores"); 
+            System.out.println("4-Cursos"); 
             System.out.println("0-Sair");
             
             System.out.print(":"); 
@@ -41,6 +43,8 @@ public class TelaPrincipal {
                 alunoController();
             else if (resposta.trim().equals("3"))
                 professorController();
+            else if (resposta.trim().equals("4"))
+                cursoController();
         } while (!resposta.trim().equals("0")); 
     } 
     
@@ -57,6 +61,11 @@ public class TelaPrincipal {
     private void professorController() throws SQLException {
         ProfessorController professorController = new ProfessorController(); 
         professorController.menuGeral();
+    } 
+    
+    private void cursoController() throws SQLException {
+        CursoController cursoController = new CursoController(); 
+        cursoController.menuGeral();
     } 
     
     
