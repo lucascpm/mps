@@ -43,7 +43,7 @@ public class ProfessorController {
     private void listarProfessores() throws SQLException {
         List<Professor> listaProfessor = new ArrayList<Professor>();
         BancoDadosController consultaBancoDados = new BancoDadosController();
-        listaProfessor = consultaBancoDados.selectProfessor(null);
+        listaProfessor = consultaBancoDados.selectProfessor();
         System.out .println("______________________________________________________________________");
         System.out.println("CODIGO--NOME--EMAIL--SEXO--DATA ADMISSAO");
         

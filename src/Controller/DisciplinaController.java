@@ -42,7 +42,7 @@ public class DisciplinaController {
     private void listarDisciplinas() throws SQLException {
         List<Disciplina> listaDisciplina = new ArrayList<Disciplina>();
         BancoDadosController consultaBancoDados = new BancoDadosController();
-        listaDisciplina = consultaBancoDados.selectDisciplina(null);
+        listaDisciplina = consultaBancoDados.selectDisciplina();
         System.out .println("______________________________________________________________________");
         System.out.println("CODIGO--NOME--PROFESSOR--LIMITE--ALUNOS MATRICULADOS");
         

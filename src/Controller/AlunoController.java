@@ -43,7 +43,7 @@ public class AlunoController {
     private void listarAlunos() throws SQLException {
         List<Aluno> listaAluno = new ArrayList<Aluno>();
         BancoDadosController consultaBancoDados = new BancoDadosController();
-        listaAluno = consultaBancoDados.selectAluno(null);
+        listaAluno = consultaBancoDados.selectAluno();
         System.out .println("______________________________________________________________________");
         System.out.println("MATRICULA--NOME--EMAIL--SEXO--DATA MATRICULA");
         

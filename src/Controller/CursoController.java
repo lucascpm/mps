@@ -23,6 +23,7 @@ public class CursoController {
             System.out.println("2-Inserir");
             System.out.println("3-Remover");
             System.out.println("4-Pesquisar");
+            System.out.println("5-Disciplinas do Curso");
             System.out.println(":"); 
             resposta = in.next(); 
             
@@ -34,6 +35,8 @@ public class CursoController {
                 removerCurso();
             else if (resposta.trim().equals("4")) 
                 pesquisarCursos();
+            else if (resposta.trim().equals("5")) 
+                disciplinasDoCurso();
         } 
         
         while (!resposta.trim().equals("0"));
@@ -95,6 +98,24 @@ public class CursoController {
         System.out.println(curso.getCodigo()+ " -   " + curso.getNome());
     }
     
-    
+    private void disciplinasDoCurso() throws SQLException {
+        System.out .println("______________________________________________________________________");
+        System.out.println("Codigo do Curso: ");
+        String codigo = in.next();
+        
+        List<Disciplina> listaDisciplina = new ArrayList<Disciplina>();
+        BancoDadosController consultaBancoDados = new BancoDadosController();
+        
+        listaDisciplina = consultaBancoDados.disciplinasDoCurso(Integer.parseInt(codigo));
+        
+        System.out .println("______________________________________________________________________");
+        System.out.println("CODIGO--NOME--PROFESSOR--LIMITE--ALUNOS MATRICULADOS");
+        
+        for (int i = 0; i < listaDisciplina.size(); i++)
+            System.out.println(listaDisciplina.get(i).getCodigo()+ " - " + listaDisciplina.get(i).getNome() + "   - " + listaDisciplina.get(i).getProfessor()
+            + " - " + listaDisciplina.get(i).getLimiteAlunos() + " - " + listaDisciplina.get(i).getQtde_alunos_matriculados());
+        
+        System.out .println("______________________________________________________________________");
+    }
     
 }

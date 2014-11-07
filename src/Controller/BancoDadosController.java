@@ -29,6 +29,7 @@ public class BancoDadosController {
     private final String INSERT_DISCIPLINA = "INSERT INTO disciplinas (codigo,professor,limite_alunos,nome) VALUES (?,?,?,?)";
     private final String SELECT_ALL_DISCIPLINA = "SELECT * FROM disciplinas";
     private final String SELECT_ONE_DISCIPLINA = "SELECT * FROM disciplinas WHERE codigo = ?";
+    private final String UPDATE_DISCIPLINA = "SELECT codigo,professor,limite_alunos,nome FROM disciplinas WHERE codigo = ?";
     
     //-----------ALUNOS-SQL-------------------------------------------------------------------------------------
     private final String DELETE_ALUNO = "DELETE FROM alunos WHERE matricula = ?";
@@ -47,6 +48,22 @@ public class BancoDadosController {
     private final String INSERT_CURSO = "INSERT INTO cursos (codigo,nome) VALUES (?,?)";
     private final String SELECT_ALL_CURSO = "SELECT * FROM cursos";
     private final String SELECT_ONE_CURSO = "SELECT * FROM cursos WHERE codigo = ?"; 
+    
+    
+    //-----------OPERAÇÕES-SQL-------------------------------------------------------------------------------------
+    //Retorna uma List com as Disciplinas Registradas no Curso escolhido (curso_cod)
+    private final String DICIPLINAS_DO_CURSO = "SELECT * FROM DisciplinasRegistradas WHERE curso_cod = ?";
+    
+    //Retorna uma List com os Professores Registrados no Curso escolhido (curso_cod)
+    private final String PROFESSORES_DO_CURSO = "SELECT * FROM ProfessoresRegistrados WHERE curso_cod = ?";
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     private final String SELECT_NEXT_SEQUENCE = "SELECT NEXTVAL('SEQUENCE_ID')";
@@ -104,7 +121,7 @@ public class BancoDadosController {
     }
     
     //Retorna uma List com os elementos (objetos Disciplina) encontrados na pesquisa
-    public List<Disciplina> selectDisciplina(Disciplina disciplina) throws SQLException { 
+    public List<Disciplina> selectDisciplina() throws SQLException { 
         Connection con = null; 
         List<Disciplina> listDisciplina = new ArrayList<Disciplina>();
         try { 
@@ -167,7 +184,7 @@ public class BancoDadosController {
     
     //------------- ALUNOS --------------------------------------
     //Retorna uma List com os elementos (objetos Aluno) encontrados na pesquisa
-    public List<Aluno> selectAluno(Aluno aluno) throws SQLException { 
+    public List<Aluno> selectAluno() throws SQLException { 
         Connection con = null; 
         List<Aluno> listAluno = new ArrayList<Aluno>();
         try { 
@@ -274,7 +291,7 @@ public class BancoDadosController {
     
     //------------- PROFESSORES -----------------------------------
     //Retorna uma List com os elementos (objetos Professor) encontrados na pesquisa
-    public List<Professor> selectProfessor(Professor professor) throws SQLException { 
+    public List<Professor> selectProfessor() throws SQLException { 
         Connection con = null; 
         List<Professor> listProfessor = new ArrayList<Professor>();
         try { 
@@ -460,12 +477,36 @@ public class BancoDadosController {
         }
         return retorno; 
     }  
+    //-----------------------------------------------------------
     
     
-    
-    
-    
-    
+    //------------- OPERAÇÕES -----------------------------------
+    //Retorna uma List com os elementos (objetos Disciplina) encontrados na pesquisa
+    public List<Disciplina> disciplinasDoCurso(int codigo) throws SQLException { 
+        Connection con = null; 
+        List<Disciplina> listDisciplina = new ArrayList<Disciplina>();
+        try { 
+            con = getConnection(); 
+            PreparedStatement prepared = con.prepareStatement(DICIPLINAS_DO_CURSO); 
+            prepared.setLong(1, codigo);
+            
+            //Com esse ResultSet eu tenho uma lista de Codigos de disciplinas referentes ao curso escolhido
+            ResultSet resultSet = prepared.executeQuery();
+            
+            while (resultSet.next()) {
+                int disciplinaCod = resultSet.getInt("disciplina_cod");
+                Disciplina disciplinaTmp = pesquisaDisciplina(disciplinaCod);
+                listDisciplina.add(disciplinaTmp); 
+            } 
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        } finally { 
+            closeConnnection(con);
+        }
+        
+        return listDisciplina; 
+    }
     
     
     
