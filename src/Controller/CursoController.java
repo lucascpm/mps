@@ -112,8 +112,7 @@ public class CursoController {
         System.out.println("CODIGO--NOME--PROFESSOR--LIMITE--ALUNOS MATRICULADOS");
         
         for (int i = 0; i < listaDisciplina.size(); i++)
-            System.out.println(listaDisciplina.get(i).getCodigo()+ " - " + listaDisciplina.get(i).getNome() + "   - " + listaDisciplina.get(i).getProfessor()
-            + " - " + listaDisciplina.get(i).getLimiteAlunos() + " - " + listaDisciplina.get(i).getQtde_alunos_matriculados());
+            System.out.println(listaDisciplina.get(i).getCodigo()+ " - " + listaDisciplina.get(i).getNome() + " - " + listaDisciplina.get(i).getDescricao());
         
         System.out .println("______________________________________________________________________");
     }

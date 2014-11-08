@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package View;
+import Controller.BancoDadosController;
 
 /**
  *
@@ -28,6 +29,7 @@ public class MainClass extends javax.swing.JFrame {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -37,8 +39,17 @@ public class MainClass extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jDesktopPane1.add(jButton1);
         jButton1.setBounds(460, 330, 100, 23);
-        jDesktopPane1.add(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jButton2.setText("Professor");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jDesktopPane1.add(jButton2);
+        jButton2.setBounds(150, 330, 130, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,20 +73,22 @@ public class MainClass extends javax.swing.JFrame {
         tela.setVisible(true);
         /*************************/
         
-        /********* Professor *****
-        Professor tela = new Professor();
-        pack();
-        jDesktopPane1.add(tela);
-        tela.setVisible(true);
-        /*************************/
-        
-         /********* Professor *****/
+         /********* Disciplina *****/
         DisciplinaForm tela = new DisciplinaForm();
         pack();
         jDesktopPane1.add(tela);
         tela.setVisible(true);
         /*************************/
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+                /********* Professor *****/
+        ProfessorForm tela = new ProfessorForm();
+        pack();
+        jDesktopPane1.add(tela);
+        tela.setVisible(true);
+        /*************************/
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -113,6 +126,7 @@ public class MainClass extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JDesktopPane jDesktopPane1;
     // End of variables declaration//GEN-END:variables
 }

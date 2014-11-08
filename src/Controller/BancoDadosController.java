@@ -8,6 +8,8 @@ import Model.Aluno;
 import Model.Disciplina;
 import Model.Professor;
 import Model.Curso;
+import Controller.ProfessorController;
+
 import com.oracle.jrockit.jfr.ContentType;
 import java.sql.Connection; 
 import java.sql.DriverManager; 
@@ -26,7 +28,7 @@ public class BancoDadosController {
 
     //-----------DISCIPLINAS-SQL-------------------------------------------------------------------------------
     private final String DELETE_DISCIPLINA = "DELETE FROM disciplinas WHERE codigo = ?";
-    private final String INSERT_DISCIPLINA = "INSERT INTO disciplinas (codigo,professor,limite_alunos,nome) VALUES (?,?,?,?)";
+    private final String INSERT_DISCIPLINA = "INSERT INTO disciplinas (codigo,nome,descricao) VALUES (?,?,?)";
     private final String SELECT_ALL_DISCIPLINA = "SELECT * FROM disciplinas";
     private final String SELECT_ONE_DISCIPLINA = "SELECT * FROM disciplinas WHERE codigo = ?";
     private final String UPDATE_DISCIPLINA = "SELECT codigo,professor,limite_alunos,nome FROM disciplinas WHERE codigo = ?";
@@ -71,7 +73,8 @@ public class BancoDadosController {
     
     public Connection getConnection() throws SQLException { 
         Connection con = null; 
-        con = DriverManager .getConnection("jdbc:postgresql://localhost/mpsdb?user=postgres&password=hbzu7d22");
+//        con = DriverManager .getConnection("jdbc:postgresql://localhost/mpsdb?user=postgres&password=hbzu7d22");
+        con = DriverManager .getConnection("jdbc:postgresql://localhost/testagemMPS?user=postgres&password=hbzu7d22");
         return con; 
     } 
     
@@ -91,16 +94,15 @@ public class BancoDadosController {
             con = getConnection();
             PreparedStatement prepared = con.prepareStatement(INSERT_DISCIPLINA); //Query
 
-            prepared.setInt(1, disciplina.getCodigo());
-            prepared.setString(2, disciplina.getProfessor());
-            prepared.setInt(3, disciplina.getLimiteAlunos());
-            prepared.setString(4, disciplina.getNome());
+            prepared.setInt   (1, disciplina.getCodigo());
+            prepared.setString(2, disciplina.getNome());
+            prepared.setString(3, disciplina.getDescricao());
             
             retorno = prepared.execute(); 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally { 
-            closeConnnection(con); 
+            closeConnnection(con);
         }
         return retorno;
     }
@@ -121,22 +123,25 @@ public class BancoDadosController {
     }
     
     //Retorna uma List com os elementos (objetos Disciplina) encontrados na pesquisa
-    public List<Disciplina> selectDisciplina() throws SQLException { 
-        Connection con = null; 
+    public List<Disciplina> selectDisciplina() throws SQLException {
+        Connection con = null;
         List<Disciplina> listDisciplina = new ArrayList<Disciplina>();
-        try { 
-            con = getConnection(); 
-            PreparedStatement prepared = con.prepareStatement(SELECT_ALL_DISCIPLINA); 
-            ResultSet resultSet = prepared.executeQuery(); 
-            
+        try {
+            con = getConnection();
+            PreparedStatement prepared = con.prepareStatement(SELECT_ALL_DISCIPLINA);
+            ResultSet resultSet = prepared.executeQuery();
+        
             while (resultSet.next()) {
+                
                 Disciplina disciplinaTmp = new Disciplina();
-                disciplinaTmp.setCodigo(resultSet.getInt("codigo"));
-                disciplinaTmp.setLimiteAlunos(resultSet.getInt("limite_alunos"));
-                disciplinaTmp.setProfessor(resultSet.getString("professor"));
-                disciplinaTmp.setNome(resultSet.getString("nome"));
-                listDisciplina.add(disciplinaTmp); 
-            } 
+                
+                disciplinaTmp.setCodigo   (resultSet.getInt("codigo"));
+                disciplinaTmp.setNome     (resultSet.getString("nome"));
+                disciplinaTmp.setDescricao(resultSet.getString("descricao"));
+                
+                listDisciplina.add(disciplinaTmp);
+            }
+            resultSet.close();
         } catch (SQLException e)
         {
             e.printStackTrace();
@@ -157,22 +162,16 @@ public class BancoDadosController {
             prepared.setLong(1, codigo);
             
             ResultSet resultSet = prepared.executeQuery();
-            
-            /*
-                Se tiver mais de um item:
-                while(resultSet.next()){
-                    resultSet.getString("nome")); //Por exemplo
-                }
-            */
+           
             resultSet.next(); //Se tiver mais de um item
             
-            disciplinaTmp.setCodigo(        resultSet.getInt("codigo"));
-            disciplinaTmp.setLimiteAlunos(  resultSet.getInt("limite_alunos"));
-            disciplinaTmp.setProfessor(     resultSet.getString("professor"));
-            disciplinaTmp.setNome(          resultSet.getString("nome"));
+            disciplinaTmp.setCodigo   (resultSet.getInt("codigo"));
+            disciplinaTmp.setDescricao(resultSet.getString("descricao"));
+            disciplinaTmp.setNome     (resultSet.getString("nome"));
                 
         } catch (SQLException e){
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("Disciplina nao existe");
         } finally {
             closeConnnection(con);
         }
@@ -187,7 +186,7 @@ public class BancoDadosController {
     public List<Aluno> selectAluno() throws SQLException { 
         Connection con = null; 
         List<Aluno> listAluno = new ArrayList<Aluno>();
-        try { 
+        try {
             con = getConnection(); 
             PreparedStatement prepared = con.prepareStatement(SELECT_ALL_ALUNO); 
             ResultSet resultSet = prepared.executeQuery(); 
@@ -230,6 +229,7 @@ public class BancoDadosController {
             alunoTmp = new Aluno(resultSet.getString("nome"), resultSet.getString("endereco"), resultSet.getString("telefone"),
                 resultSet.getString("sexo"), resultSet.getString("email"), resultSet.getString("senha"), resultSet.getString("login"),
                 resultSet.getInt("matricula"), data_matricula);
+            resultSet.close();
         } catch (SQLException e){
             e.printStackTrace();
         } finally {
@@ -307,7 +307,8 @@ public class BancoDadosController {
                 resultSet.getString("sexo"), resultSet.getString("email"), resultSet.getString("senha"), resultSet.getString("login"));
 
                 listProfessor.add(professorTmp); 
-            } 
+            }
+            resultSet.close();
         } catch (SQLException e)
         {
             e.printStackTrace();
@@ -335,7 +336,7 @@ public class BancoDadosController {
 
             professorTmp = new Professor(resultSet.getInt("codigo"),data_admissao, resultSet.getString("nome"), resultSet.getString("endereco"), resultSet.getString("telefone"),
             resultSet.getString("sexo"), resultSet.getString("email"), resultSet.getString("senha"), resultSet.getString("login"));
-                
+            resultSet.close();
         } catch (SQLException e){
             e.printStackTrace();
         } finally {
@@ -411,6 +412,7 @@ public class BancoDadosController {
 
                 listCurso.add(cursoTmp); 
             } 
+            resultSet.close();
         } catch (SQLException e)
         {
             e.printStackTrace();

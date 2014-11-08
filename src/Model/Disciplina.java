@@ -8,21 +8,19 @@ public class Disciplina {
     
     private int codigo;
     private String nome;
-    private String professor;
-    private int limiteAlunos;
-    private int qtde_alunos_matriculados;
+    private String descricao;
 
     public Disciplina(){
         
     }
 
-    public Disciplina(int codigo, String nome, String professor, int limiteAlunos, int qtde_alunos_matriculados) {
+    public Disciplina(int codigo, String nome, String descricao) {
         this.codigo = codigo;
         this.nome = nome;
-        this.professor = professor;
-        this.limiteAlunos = limiteAlunos;
-        this.qtde_alunos_matriculados = qtde_alunos_matriculados;
+        this.descricao = descricao;
     }
+
+
 
     public int getCodigo() {
         return codigo;
@@ -40,30 +38,14 @@ public class Disciplina {
         this.nome = nome;
     }
 
-    public String getProfessor() {
-        return professor;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setProfessor(String professor) {
-        this.professor = professor;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public int getLimiteAlunos() {
-        return limiteAlunos;
-    }
-
-    public void setLimiteAlunos(int limiteAlunos) {
-        this.limiteAlunos = limiteAlunos;
-    }
-
-    public int getQtde_alunos_matriculados() {
-        return qtde_alunos_matriculados;
-    }
-
-    public void setQtde_alunos_matriculados(int qtde_alunos_matriculados) {
-        this.qtde_alunos_matriculados = qtde_alunos_matriculados;
-    }
-    
     
     
     

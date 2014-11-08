@@ -4,8 +4,13 @@
  */
 package View;
 import Model.Disciplina;
+import Model.Professor;
 import Controller.DisciplinaController;
+import Controller.ProfessorController;
 import Controller.BancoDadosController;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author LASID_1
@@ -25,12 +30,10 @@ public class DisciplinaForm extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         nomeDisciplina = new javax.swing.JTextField();
         codigoDisciplina = new javax.swing.JTextField();
-        professorDisciplina = new javax.swing.JTextField();
-        limiteDeAlunos = new javax.swing.JTextField();
+        descricao = new javax.swing.JTextField();
         botaoCadastrar = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
 
@@ -38,9 +41,13 @@ public class DisciplinaForm extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Codigo");
 
-        jLabel4.setText("Limite De Alunos");
+        jLabel6.setText("Descrição");
 
-        jLabel6.setText("Professor");
+        descricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                descricaoActionPerformed(evt);
+            }
+        });
 
         botaoCadastrar.setText("Cadastrar");
         botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -66,20 +73,10 @@ public class DisciplinaForm extends javax.swing.JInternalFrame {
                         .addComponent(codigoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(professorDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(35, 35, 35))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(limiteDeAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addContainerGap()))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(botaoCadastrar)
-                        .addGap(77, 77, 77))))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoCadastrar))
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,59 +90,57 @@ public class DisciplinaForm extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(professorDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(codigoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(limiteDeAlunos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                        .addComponent(descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(codigoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoCadastrar)
-                    .addComponent(botaoVoltar))
-                .addGap(31, 31, 31))
+                    .addComponent(botaoVoltar)
+                    .addComponent(botaoCadastrar))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-         codigo = new Integer (codigoDisciplina.getText());
-         limiteAlunos = new Integer (limiteDeAlunos.getText());
-         qtde_alunos_matriculados = 0;
-         nome = nomeDisciplina.getText();
-         professor = new Integer(professorDisciplina.getText());
+        codigo = new Integer (codigoDisciplina.getText());
+        nome = nomeDisciplina.getText();
+        descricao_ = descricao.getText();
          
+         Professor professor_obj = null;
+        try {
+            BancoDadosController ProfessorBD = new BancoDadosController();
+            professor_obj = ProfessorBD.pesquisaProfessor(codigo);
+        } catch (SQLException ex) {
+            Logger.getLogger(DisciplinaForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
          //Cria Objeto Disciplina com o conteúdo do formulário
-         Disciplina novaDisciplina = new Disciplina(codigo, nome, professor,limiteAlunos, qtde_alunos_matriculados);
+         Disciplina novaDisciplina = new Disciplina(codigo, nome, descricao_);
          
-         BancoDadosController BancoDados = new BancoDadosController();
-         BancoDados.insertDisciplina(novaDisciplina);
+         BancoDadosController DisciplinaBD = new BancoDadosController();
+         DisciplinaBD.insertDisciplina(novaDisciplina);
          
-         System.out.println(codigo + "\n" + limiteAlunos+ "\n" + qtde_alunos_matriculados + "\n" + nome + professor);
+//         System.out.println(codigo + "\n" + limiteAlunos+ "\n" + qtde_alunos_matriculados + "\n" + nome + professor);
     }//GEN-LAST:event_botaoCadastrarActionPerformed
+
+    private void descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descricaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_descricaoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
     private javax.swing.JButton botaoVoltar;
     private javax.swing.JTextField codigoDisciplina;
+    private javax.swing.JTextField descricao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField limiteDeAlunos;
     private javax.swing.JTextField nomeDisciplina;
-    private javax.swing.JTextField professorDisciplina;
     // End of variables declaration//GEN-END:variables
-int codigo, 
-    limiteAlunos,
-    professor,
-    qtde_alunos_matriculados; 
-String nome;
+int codigo;
+String nome,
+       descricao_;
 }

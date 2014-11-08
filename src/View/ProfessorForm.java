@@ -73,6 +73,11 @@ public class ProfessorForm extends javax.swing.JInternalFrame {
         }
 
         sexoProfessor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Feminino" }));
+        sexoProfessor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sexoProfessorActionPerformed(evt);
+            }
+        });
 
         botaoCadastrar.setText("Cadastrar");
         botaoCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -202,6 +207,7 @@ public class ProfessorForm extends javax.swing.JInternalFrame {
         dataAdmissao = Calendar.getInstance();
         
          //Cria Objeto Disciplina com o conteúdo do formulário
+//Professor(int codigo, Calendar dataAdmissao, String nome, String endereceo, String telefone, String sexo, String email, String senha, String login) {
          Professor novoProfessor = new Professor(codigo, dataAdmissao, nome, endereco, telefone, sexo, email, senha, login);
          
          BancoDadosController BancoDados = new BancoDadosController();
@@ -210,6 +216,10 @@ public class ProfessorForm extends javax.swing.JInternalFrame {
         System.out.println(nome + "\n" + endereco + "\n" + email + "\n" + login+ "\n" +senha+ "\n" +telefone+ "\n" +codigo+ "\n" +sexo +"\n" + dataAdmissao.getTime());
 
     }//GEN-LAST:event_botaoCadastrarActionPerformed
+
+    private void sexoProfessorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sexoProfessorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sexoProfessorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCadastrar;
