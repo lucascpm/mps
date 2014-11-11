@@ -5,7 +5,6 @@ package Controller;
  * @author Lucas
  */
 import Model.Aluno;
-import Model.Disciplina;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar; 

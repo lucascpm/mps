@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package View;
 
 /**
@@ -29,10 +23,7 @@ public class TelaPrincipal {
         String resposta; 
         do { 
             System.out .println("****************************Gerenciamento de Cursos 0.01****************************"); 
-            System.out.println("1-Disciplinas"); 
-            System.out.println("2-Alunos"); 
-            System.out.println("3-Professores"); 
-            System.out.println("4-Cursos"); 
+            System.out.println("2-Alunos");
             System.out.println("0-Sair");
             
             System.out.print(":"); 
