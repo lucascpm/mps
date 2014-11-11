@@ -1,4 +1,4 @@
 mps
 ===
 
-Ssitema de Gerenciamento de Curos
+Sitema de Gerenciamento de Curos
