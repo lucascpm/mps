@@ -110,6 +110,12 @@ public class ProfessorController {
         insercaoBancoDados.insertProfessor(novoProfessor);
     }
     
+        
+    public void inserirProfessor(Professor novoProfessor) {
+        BancoDadosController insercaoBancoDados = new BancoDadosController();
+        insercaoBancoDados.insertProfessor(novoProfessor);
+    }
+    
     private void removerProfessor() throws SQLException {
         System.out .println("______________________________________________________________________");
         System.out.println("Matricula: ");

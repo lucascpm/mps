@@ -109,6 +109,11 @@ public class AlunoController {
         insercaoBancoDados.insertAluno(novoAluno);
     }
     
+    public void inserirAluno(Aluno novoAluno){
+        BancoDadosController bd = new BancoDadosController();
+        bd.insertAluno(novoAluno);
+    }
+    
     private void removerAluno() throws SQLException {
         System.out .println("______________________________________________________________________");
         System.out.println("Matricula: ");

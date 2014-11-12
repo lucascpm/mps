@@ -30,7 +30,7 @@
                       <Component id="codigoDisciplina" alignment="0" min="-2" pref="144" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="147" max="32767" attributes="0"/>
+              <EmptySpace pref="62" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel6" min="-2" pref="63" max="-2" attributes="0"/>
                   <Component id="descricao" alignment="0" min="-2" pref="144" max="-2" attributes="0"/>
@@ -65,7 +65,7 @@
                   <Component id="botaoVoltar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="botaoCadastrar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="101" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

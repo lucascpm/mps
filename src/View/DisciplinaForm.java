@@ -6,7 +6,6 @@ package View;
 import Model.Disciplina;
 import Model.Professor;
 import Controller.DisciplinaController;
-import Controller.ProfessorController;
 import Controller.BancoDadosController;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -71,7 +70,7 @@ public class DisciplinaForm extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(nomeDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(codigoDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -99,31 +98,22 @@ public class DisciplinaForm extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoVoltar)
                     .addComponent(botaoCadastrar))
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCadastrarActionPerformed
-        codigo = new Integer (codigoDisciplina.getText());
+        codigo = Integer.parseInt(codigoDisciplina.getText());
         nome = nomeDisciplina.getText();
         descricao_ = descricao.getText();
          
-         Professor professor_obj = null;
-        try {
-            BancoDadosController ProfessorBD = new BancoDadosController();
-            professor_obj = ProfessorBD.pesquisaProfessor(codigo);
-        } catch (SQLException ex) {
-            Logger.getLogger(DisciplinaForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
          //Cria Objeto Disciplina com o conteúdo do formulário
          Disciplina novaDisciplina = new Disciplina(codigo, nome, descricao_);
          
-         BancoDadosController DisciplinaBD = new BancoDadosController();
-         DisciplinaBD.insertDisciplina(novaDisciplina);
-         
-//         System.out.println(codigo + "\n" + limiteAlunos+ "\n" + qtde_alunos_matriculados + "\n" + nome + professor);
+         DisciplinaController disciplinaController = new DisciplinaController();
+         disciplinaController.inserirDisciplina(novaDisciplina);
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descricaoActionPerformed

@@ -76,6 +76,11 @@ public class DisciplinaController {
         insercaoBancoDados.insertDisciplina(novaDisciplina);
     }
     
+    public void inserirDisciplina(Disciplina novaDisciplina){
+        BancoDadosController insercaoBancoDados = new BancoDadosController();
+        insercaoBancoDados.insertDisciplina(novaDisciplina);
+    }
+    
     private void removerDisciplina() throws SQLException {
         System.out .println("______________________________________________________________________");
         System.out.println("Codigo: ");
